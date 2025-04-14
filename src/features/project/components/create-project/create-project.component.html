@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="row">
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand">Create Project</a>
+        <form class="d-flex" role="search">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+        </form>
+      </div>
+    </nav>
+    <div class="col">
+        <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <label for="projectName" class="form-label">Project Name</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="projectName"
+                    placeholder="Enter project name"
+                    formControlName="title"
+                />
+            </div>
+            <div class="mb-3">
+                <label for="projectDescription" class="form-label">Project Description</label>
+                <textarea
+                    class="form-control"
+                    id="projectDescription"
+                    rows="3"
+                    placeholder="Enter project description"
+                    formControlName="description"
+                ></textarea>
+            </div>
+            <div class="mb-3 d-flex">
+                <div class="me-2">
+                    <label for="startDate" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="startDate" formControlName="startDate" />
+                </div>
+                <div>
+                    <label for="endDate" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="endDate" formControlName="endDate" />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Project</button>
+        </form>
+    </div>
+  </div>
+</div>

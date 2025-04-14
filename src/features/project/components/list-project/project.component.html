@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="row">
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand">Projects</a>
+        <form class="d-flex" role="search">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <button class="btn btn-primary" (click)="navigateToCreateProject()">Add new Project</button>
+      </div>
+    </nav>
+    All(10)
+    <div class="project-dashboard row row-cols-4 g-4 justify-content-between">
+      @for(project of projects; track $index) {
+      <div class="card col" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">{{ project.title }}</h5>
+          <p class="card-text">{{ project.description }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Status: {{ project.status }}</li>
+          <li class="list-group-item">Owner: {{ project.owner }}</li>
+          <li class="list-group-item">Start Date: {{ project.startDate }}</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="card-link">View Project</a>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>
