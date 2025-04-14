@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <div class="row">
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand">View Project</a>
+        <form class="d-flex" role="search">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </form>
+      </div>
+    </nav>
+    <div class="project-details">
+      @if(project) {
+      <h2>{{ project.title }}</h2>
+      <p>{{ project.description }}</p>
+      <p><strong>Start Date:</strong> {{ project.startDate | date }}</p>
+      <p><strong>End Date:</strong> {{ project.endDate | date }}</p>
+      <p><strong>Created At:</strong> {{ project.createdAt | date }}</p>
+      <p><strong>Updated At:</strong> {{ project.updatedAt | date }}</p>
+      <p><strong>Created By:</strong> {{ project.createdBy }}</p>
+      <p><strong>Updated By:</strong> {{ project.updatedBy }}</p>
+      <p><strong>Project ID:</strong> {{ project._id }}</p>
+      <p><strong>Project Status:</strong> {{ project.status }}</p>
+      <p><strong>Project Type:</strong> {{ project.type }}</p>
+      <p><strong>Project Priority:</strong> {{ project.priority }}</p>
+      <p><strong>Project Tags:</strong> {{ project.tags.join(", ") }}</p>
+      <p><strong>Project Members:</strong></p>
+      }
+    </div>
+  </div>
+</div>

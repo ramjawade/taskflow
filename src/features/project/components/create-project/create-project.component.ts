@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ProjectStoreService } from '../../services/project-store.service';
+import { Project } from '../../modals/project';
+import { IProject } from '../../interfaces/project.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-project',
@@ -19,11 +23,17 @@ export class CreateProjectComponent {
     priority: new FormControl(''),
   });
 
+  constructor(
+    private projectStoreService: ProjectStoreService,
+    private router: Router
+  ) {}
+
   onSubmit() {
     if (this.projectForm.valid) {
-      const projectData = this.projectForm.getRawValue();
-      console.log('Project Data:', projectData);
-      // Here you can send the data to your backend or perform any other action
+      const projectData = this.projectForm.getRawValue() as IProject;
+      this.projectStoreService.addProject(new Project(projectData));
+      
+      this.router.navigate(['/projects']);
     } else {
       console.log('Form is invalid');
     }
