@@ -14,5 +14,9 @@ export const projectRoutes: Routes = [
   },{
     path:'view-project/:id',
     component: ViewProjectComponent,
+    children: [{
+      path:'',
+      loadChildren: () => import('../task-mgt/task-mgt.routes').then(r => r.taskRoutes)
+    }]  
   }
 ];

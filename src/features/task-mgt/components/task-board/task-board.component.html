@@ -1,0 +1,24 @@
+<div class="row justify-content-between">
+  <div
+    class="card"
+    style="width: 20rem"
+    *ngFor="let taskCategory of tasks"
+    cdkDropList
+    [cdkDropListData]="taskCategory.items"
+    [cdkDropListConnectedTo]="connectedDropLists"
+    (cdkDropListDropped)="drop($event, taskCategory.status)"
+  >
+    <div class="card-body">
+      <h5 class="card-title">{{ taskCategory.status }}</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li
+        class="list-group-item"
+        *ngFor="let task of taskCategory.items"
+        cdkDrag
+      >
+        {{ task }}
+      </li>
+    </ul>
+  </div>
+</div>

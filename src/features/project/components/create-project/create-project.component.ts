@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ProjectStoreService } from '../../services/project-store.service';
 import { Project } from '../../modals/project';
-import { IProject } from '../../interfaces/project.interface';
+import { IProject } from '../../../common/interfaces/project.interface';
 import { Router } from '@angular/router';
+import { ProjectStoreService } from '../../../common/services/project-store.service';
 
 @Component({
   selector: 'app-create-project',
@@ -32,7 +32,7 @@ export class CreateProjectComponent {
     if (this.projectForm.valid) {
       const projectData = this.projectForm.getRawValue() as IProject;
       this.projectStoreService.addProject(new Project(projectData));
-      
+
       this.router.navigate(['/projects']);
     } else {
       console.log('Form is invalid');

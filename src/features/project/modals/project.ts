@@ -1,4 +1,4 @@
-import { IProject } from "../interfaces/project.interface";
+import { IProject } from "../../common/interfaces/project.interface";
 
 export class Project {
     title: string;

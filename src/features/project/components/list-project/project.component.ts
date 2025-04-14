@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FooterComponent } from '../../../../layout/footer/footer.component';
-import { ProjectStoreService } from '../../services/project-store.service';
-import { IProject } from '../../interfaces/project.interface';
+import { IProject } from '../../../common/interfaces/project.interface';
+import { ProjectStoreService } from '../../../common/services/project-store.service';
 
 @Component({
   selector: 'app-project',
