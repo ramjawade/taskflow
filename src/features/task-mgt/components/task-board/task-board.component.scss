@@ -1,45 +1,72 @@
 /* filepath: /home/ram/dev/fe/taskflow/src/features/project/components/view-project/view-project.component.scss */
 .cdk-drag-preview {
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    border: 1px solid #ccc;
-    background: white;
-    // padding: 10px;
+    background-color: #e0f7fa; /* Light cyan background */
+    border: 2px dashed #007bff; /* Dashed border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for emphasis */
+    transform: rotate(3deg); /* Slight rotation for effect */
     border-radius: 4px;
-  }
-  
-  .cdk-drag-placeholder {
-    opacity: 0.5;
-  }
-  
-  .cdk-drag-animating {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-  }
-  
-  .cdk-drop-list-dragging .cdk-drag {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-  }
+}
 
-  .project-board {
+.cdk-drag-placeholder {
+    opacity: 0.5;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging {
+    border: 2px dashed #28a745; /* Dashed green border */
+    background-color: #f8f9fa; /* Light gray background */
+    transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.cdk-drop-list-dragging .cdk-drag {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag:hover {
+    cursor: grab;
+    background-color: #f1f8e9; /* Light green background */
+    transition: background-color 0.3s ease;
+}
+
+.project-board {
     height: calc(100% - 1rem);
     overflow: hidden;
-  }
+}
 
-  .card {
+.card {
     // width: 20rem;
     height: 100%;
     &-body {
       overflow-y: auto;
     }
-  }
-  .add-task {
+}
+.add-task {
     border-color: rgba(0, 0, 0, 0.175);
     border-bottom-width: 0;
     border-right-width: 0;
     border-left-width: 0;
-  }
-  .task-status {
+}
+.task-status {
     width: 1.5rem;
     height: 1.5rem;
     display: inline-block;
     border-radius: 1rem;
+}
+
+.drag-handle {
+  cursor: grab;
+  color: #6c757d; /* Neutral color for the handle */
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: #495057; /* Darker shade on hover */
   }
+
+  i {
+    font-size: 1.2rem; /* Adjust icon size */
+  }
+}

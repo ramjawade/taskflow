@@ -1,5 +1,5 @@
-<table class="table table-hover">
-  <thead>
+<table class="table table-striped">
+  <thead class="table-light">
     <tr>
       @for(header of headers; track $index) {
       <th scope="col">{{ header.label }}</th>
@@ -15,11 +15,11 @@
       <td>
         <span
           [ngClass]="{
-            'bg-success-subtle': task[header.key] === 'COMPLETED',
-            'bg-info-subtle': task[header.key] === 'IN_PROGRESS',
-            'bg-danger-subtle': task[header.key] === 'OPEN'
+            'bg-success-subtle text-success': task[header.key] === 'COMPLETED',
+            'bg-info-subtle text-info': task[header.key] === 'IN_PROGRESS',
+            'bg-danger-subtle text-danger': task[header.key] === 'OPEN'
           }"
-          class="task-status me-2"
+          class="task-status me-2 px-2 py-1 rounded"
         ></span>
         {{ task[header.key] }}
       </td>
@@ -35,9 +35,9 @@
     </tr>
     }
   </tbody>
-  <div>
-    <button class="btn btn-outline-primary mt-2" (click)="createTask()" >
-      Create Task
-    </button>
-  </div>
 </table>
+<div class="text-end mt-3">
+  <button class="btn btn-outline-primary" (click)="createTask()">
+    <i class="bi bi-plus"></i> Create Task
+  </button>
+</div>

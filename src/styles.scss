@@ -9,17 +9,46 @@ body {
   height: 100vh;
   width: 100%;
 }
+
+/* Define custom color palette inspired by Plane */
+$primary: #1d4ed8; /* Blue */
+$secondary: #64748b; /* Slate Gray */
+$success: #22c55e; /* Green */
+$info: #0ea5e9; /* Sky Blue */
+$warning: #f59e0b; /* Amber */
+$danger: #ef4444; /* Red */
+$light: #f8fafc; /* Light Gray */
+$dark: #1e293b; /* Dark Slate */
+
+/* Optional: Add custom shades */
+$custom-purple: #7c3aed; /* Violet */
+$custom-orange: #f97316; /* Orange */
+
+/* Update Bootstrap theme colors */
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+  "purple": $custom-purple,
+  "orange": $custom-orange
+);
+
+$box-shadow-sm: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+$table-cell-padding-y: 1rem;
+$card-cap-bg: transparent;
+
+/* Import Bootstrap with the updated theme */
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.scss";
+
+/* Global styles */
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #f8f9fa;
+  background-color: $light;
+  color: $dark;
 }
-.line-clamp {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;  
-}
-$box-shadow-sm: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-$table-cell-padding-y:1rem;
-$card-cap-bg: transparent;
-@import "../node_modules/bootstrap/scss/bootstrap.scss"; /* You can add global styles to this file, and also import other style files */
-@import "../node_modules/bootstrap-icons/font/bootstrap-icons.scss";

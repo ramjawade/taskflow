@@ -1,95 +1,95 @@
-<div class="container-fluid">
-  <div class="row">
-    <nav class="navbar bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand">Create Project</a>
-        <button class="ms-auto btn btn-outline-secondary" (click)="goBack()">
-          <i class="bi bi-arrow-left me-2"></i>Back
-        </button>
-      </div>
-    </nav>
-    <div class="col">
-      <div class="container mt-4">
-        <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
-          <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input
-              id="title"
-              formControlName="title"
-              type="text"
-              class="form-control"
-              placeholder="Enter project title"
-            />
-          </div>
-
-          <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea
-              id="description"
-              formControlName="description"
-              class="form-control"
-              rows="3"
-              placeholder="Enter project description"
-            ></textarea>
-          </div>
-
-          <div class="mb-3">
-            <label for="status" class="form-label">Status</label>
-            <select id="status" formControlName="status" class="form-select">
-              <option value="NOT_STARTED">Not Started</option>
-              <option value="IN_PROGRESS">In Progress</option>
-              <option value="COMPLETED">Completed</option>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label for="owner" class="form-label">Owner</label>
-            <input
-              id="owner"
-              formControlName="owner"
-              type="text"
-              class="form-control"
-              placeholder="Enter project owner"
-            />
-          </div>
-
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="startDate" class="form-label">Start Date</label>
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex align-items-center">
+          <h5 class="mb-0">Create Project</h5>
+          <button class="ms-auto btn btn-outline-primary btn-sm" (click)="goBack()">
+            <i class="bi bi-arrow-left me-2"></i>Back
+          </button>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
               <input
-                id="startDate"
-                formControlName="startDate"
-                type="date"
+                id="title"
+                formControlName="title"
+                type="text"
                 class="form-control"
+                placeholder="Enter project title"
               />
             </div>
 
-            <div class="col-md-6 mb-3">
-              <label for="endDate" class="form-label">End Date</label>
-              <input
-                id="endDate"
-                formControlName="endDate"
-                type="date"
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea
+                id="description"
+                formControlName="description"
                 class="form-control"
+                rows="3"
+                placeholder="Enter project description"
+              ></textarea>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select id="status" formControlName="status" class="form-select">
+                  <option value="NOT_STARTED">Not Started</option>
+                  <option value="IN_PROGRESS">In Progress</option>
+                  <option value="COMPLETED">Completed</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="priority" class="form-label">Priority</label>
+                <select id="priority" formControlName="priority" class="form-select">
+                  <option value="P1">HIGH</option>
+                  <option value="P2">MEDIUM</option>
+                  <option value="P3">LOW</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="owner" class="form-label">Owner</label>
+              <input
+                id="owner"
+                formControlName="owner"
+                type="text"
+                class="form-control"
+                placeholder="Enter project owner"
               />
             </div>
-          </div>
 
-          <div class="mb-3">
-            <label for="priority" class="form-label">Priority</label>
-            <select id="priority" formControlName="priority" class="form-select">
-              <option value="P1">HIGH</option>
-              <option value="P2">MEDIUM</option>
-              <option value="P3">LOW</option>
-            </select>
-          </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input
+                  id="startDate"
+                  formControlName="startDate"
+                  type="date"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="endDate" class="form-label">End Date</label>
+                <input
+                  id="endDate"
+                  formControlName="endDate"
+                  type="date"
+                  class="form-control"
+                />
+              </div>
+            </div>
 
-          <div class="d-grid">
-            <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid">
-              Create Project
-            </button>
-          </div>
-        </form>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid">
+                Create Project
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
