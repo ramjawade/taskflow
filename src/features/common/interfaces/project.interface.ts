@@ -2,9 +2,9 @@ export interface IProject {
     id?: string | number;
     title: string;
     description: string;
-    status?: string;
+    status?: 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED';
     owner?: string;
     startDate: string;
     endDate?: string;
-    priority?: string;
+    priority?: 'HIGH' | 'MEDIUM' | 'LOW';
 }

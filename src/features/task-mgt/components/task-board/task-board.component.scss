@@ -18,3 +18,28 @@
   .cdk-drop-list-dragging .cdk-drag {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
+
+  .project-board {
+    height: calc(100% - 1rem);
+    overflow: hidden;
+  }
+
+  .card {
+    width: 20rem;
+    height: 100%;
+    &-body {
+      overflow-y: auto;
+    }
+  }
+  .add-task {
+    border-color: rgba(0, 0, 0, 0.175);
+    border-bottom-width: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+  }
+  .task-status {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: inline-block;
+    border-radius: 1rem;
+  }

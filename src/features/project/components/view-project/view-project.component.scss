@@ -1,0 +1,10 @@
+.project {
+    &-main {
+        height: calc(100vh - 9.5rem);
+        overflow: hidden;
+    }
+    &-outlet {
+        height: 100%;
+        overflow-y: auto;
+    }
+}

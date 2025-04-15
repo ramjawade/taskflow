@@ -1,0 +1,16 @@
+.avatar-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+}
+.rounded-circle {
+  border-radius: 50%;
+}
+.me-2 {
+  margin-right: 0.5rem;
+}

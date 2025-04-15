@@ -3,37 +3,153 @@
     <nav class="navbar bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand">Projects</a>
-        <form class="d-flex" role="search">
+
+        <div class="filters">
+          <button disabled
+            class="btn btn-outline-secondary ms-2"
+            (click)="navigateToCreateProject()"
+          >
+          <i class="bi bi-sliders"></i> Setting
+          </button>
+          <button
+            class="btn btn-outline-primary ms-2"
+            (click)="navigateToCreateProject()"
+          >
+          <i class="bi bi-plus"></i>
+            New Project
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div class="d-flex py-2 px-0">
+      <form class="d-flex" role="search">
+        <div class="input-group">
           <input
-            class="form-control me-2"
+            class="form-control"
             type="search"
             placeholder="Search"
             aria-label="Search"
           />
           <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-        <button class="btn btn-primary" (click)="navigateToCreateProject()">Add new Project</button>
-      </div>
-    </nav>
-    All(10)
-    <div class="project-dashboard row row-cols-4 g-4 justify-content-between">
-      @for(project of projects; track $index) {
-      <div class="card col" style="width: 18rem">
-        <div class="card-body">
-          <h5 class="card-title">{{ project.title }}</h5>
-          <p class="card-text">{{ project.description }}</p>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Status: {{ project.status }}</li>
-          <li class="list-group-item">Owner: {{ project.owner }}</li>
-          <li class="list-group-item">Start Date: {{ project.startDate }}</li>
-        </ul>
-        <div class="card-body">
-          <button class="btn btn-primary" (click)="viewProject(project)"> View Project</button>
+      </form>
+      <!-- <div class="d-flex ms-4">
+        <button class="btn" disabled>Sort</button>
+        <div class="vr"></div>
+        <button class="btn">Start Date</button>
+        <div class="vr"></div>
+        <button class="btn" (click)="isAccedingOrder = !isAccedingOrder">
+          @if(isAccedingOrder){
+          <i class="bi bi-arrow-up"></i>
+          } @else {
+          <i class="bi bi-arrow-down"></i>
+          }
+        </button>
+      </div> -->
+      <div class="filters ms-auto d-flex">
+        <div class="btn-group me-2" role="group">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="filterByStatus('ALL')"
+          >
+            All ({{ allProjectsCount }})
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="filterByStatus('COMPLETED')"
+          >
+            Completed ({{ completedProjectsCount }})
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="filterByStatus('IN_PROGRESS')"
+          >
+            In Progress ({{ inProgressProjectsCount }})
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="filterByStatus('NOT_STARTED')"
+          >
+            Not Started ({{ notStartedProjectsCount }})
+          </button>
+        </div>
+        <div class="vr"></div>
+        <div
+          class="btn-group ms-2"
+          role="group"
+          aria-label="Basic outlined example"
+        >
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            [ngClass]="{ active: !isListView }"
+            (click)="isListView = false"
+          >
+            <i class="bi bi-grid"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            [ngClass]="{ active: isListView }"
+            (click)="isListView = true"
+          >
+            <i class="bi bi-view-list"></i>
+          </button>
         </div>
       </div>
-      }
+    </div>
+    <div>
+      <ng-container *ngIf="isListView; else cardView">
+        <ng-container *ngFor="let project of filteredProjects; trackBy: trackByFn">
+          <!-- List View Template -->
+          <div class="border shadow-sm row m-3 rounded border-0">
+            <div class="col-4 border-end">
+              <h5 class="card-title">{{ project.title }}</h5>
+              <p class="card-text">{{ project.description }}</p>
+            </div>
+            <ul class="list-group list-group-flush col-4 border-end">
+              <li class="list-group-item">Status: {{ project.status }}</li>
+              <li class="list-group-item">Owner: {{ project.owner }}</li>
+              <li class="list-group-item">Start Date: {{ project.startDate }}</li>
+            </ul>
+            <div class="card-body col-4 text-center">
+              <button class="btn btn-primary" (click)="viewProject(project)">
+                View Project
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <ng-template #cardView>
+        <div class="project-dashboard row row-cols-auto justify-content-between">
+          <ng-container *ngFor="let project of filteredProjects; trackBy: trackByFn">
+            <!-- Card View Template -->
+            <div class="card col shadow-sm rounded g-3 border-0" style="width: 18rem">
+              <div class="card-body">
+                <h5 class="card-title">{{ project.title }}</h5>
+                <p class="card-text">{{ project.description }}</p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Status: {{ project.status }}</li>
+                <li class="list-group-item">Owner: {{ project.owner }}</li>
+                <li class="list-group-item">Start Date: {{ project.startDate }}</li>
+              </ul>
+              <div class="card-body">
+                <button
+                  class="btn btn-outline-primary"
+                  (click)="viewProject(project)"
+                >
+                  View Project
+                </button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-template>
     </div>
   </div>
-  <app-footer></app-footer>
 </div>

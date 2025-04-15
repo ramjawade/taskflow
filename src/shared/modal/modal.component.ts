@@ -7,7 +7,7 @@ import { Component, Input, input } from '@angular/core';
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
-@Input() modalId: string = '';
+@Input() modalId: string = 'abcd';
 @Input() modalTitle: string = '';
 @Input() modalContent: string = '';
 

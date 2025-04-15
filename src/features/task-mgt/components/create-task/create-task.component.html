@@ -1,0 +1,51 @@
+<div class="container mt-4">
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="needs-validation">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input id="title" formControlName="title" type="text" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="status" class="form-label">Status</label>
+      <select id="status" formControlName="status" class="form-select">
+        <option value="OPEN">Open</option>
+        <option value="IN_PROGRESS">In Progress</option>
+        <option value="COMPLETED">Completed</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="assignee" class="form-label">Assignee</label>
+      <input id="assignee" formControlName="assignee" type="text" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="size" class="form-label">Size</label>
+      <select id="size" formControlName="size" class="form-select">
+        <option value="XS">XS</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="startDate" class="form-label">Start Date</label>
+        <input id="startDate" formControlName="startDate" type="date" class="form-control" />
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="endDate" class="form-label">End Date</label>
+        <input id="endDate" formControlName="endDate" type="date" class="form-control" />
+      </div>
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" [disabled]="taskForm.invalid" class="btn btn-primary">
+        Create Task
+      </button>
+    </div>
+  </form>
+</div>

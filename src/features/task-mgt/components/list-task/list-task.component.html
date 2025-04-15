@@ -1,1 +1,35 @@
-<p>list-task works!</p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      @for(header of headers; track $index) {
+      <th scope="col">{{ header.label }}</th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (task of tasks; track $index; let i = $index) {
+    <tr>
+      @for(header of headers; track $index) { @if( header.label === '#') {
+      <td>{{ i + 1 }}</td>
+      } @else if( header.label === 'Status') {
+      <td>
+        <span
+          [ngClass]="{
+            'bg-success-subtle': task[header.key] === 'COMPLETED',
+            'bg-info-subtle': task[header.key] === 'IN_PROGRESS',
+            'bg-danger-subtle': task[header.key] === 'OPEN'
+          }"
+          class="task-status me-2"
+        ></span>
+        {{ task[header.key] }}
+      </td>
+      } @else {
+      <td>{{ task[header.key] }}</td>
+      }}
+    </tr>
+    }
+    <!-- <tr *for="let task of tasks">
+      <td *for="let header of headers">{{ task[header.key] }}</td>
+    </tr> -->
+  </tbody>
+</table>

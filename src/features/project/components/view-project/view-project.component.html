@@ -13,20 +13,20 @@
         </form>
         <div>
           <button class="btn btn-primary">Edit Project</button>
-          <button class="btn btn-danger">Delete Project</button>
-          <button class="btn btn-secondary">Back to Project List</button>
+          <button class="btn btn-danger" (click)="deleteProject()" >Delete Project</button>
+          <button class="btn btn-secondary" (click)="createNewTask()">New Task</button>
         </div>
       </div>
     </nav>
-    <div class="row">
-      <div class="col-2 border-end">
+    <div class="row project-main">
+      <div class="col-2">
         <ul class="list-group">
           <li class="list-group-item" routerLink="./board">Board</li>
           <li class="list-group-item" routerLink="./backlogs">Backlogs</li>
           <li class="list-group-item">Roadmap</li>
         </ul>
       </div>
-      <div class="col-10">
+      <div class="col-10 project-outlet">
         <router-outlet></router-outlet>
       </div>
     </div>
