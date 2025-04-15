@@ -23,13 +23,21 @@
         ></span>
         {{ task[header.key] }}
       </td>
+      } @else if(header.label === 'Size') {
+      <td>
+        <span class="badge text-bg-info rounded-pill">
+          {{ task[header.key] }}</span
+        >
+      </td>
       } @else {
       <td>{{ task[header.key] }}</td>
       }}
     </tr>
     }
-    <!-- <tr *for="let task of tasks">
-      <td *for="let header of headers">{{ task[header.key] }}</td>
-    </tr> -->
   </tbody>
+  <div>
+    <button class="btn btn-outline-primary mt-2" (click)="createTask()" >
+      Create Task
+    </button>
+  </div>
 </table>

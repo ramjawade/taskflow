@@ -9,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ITask, TaskStatus } from '../../interfaces/task.interface';
 import { TaskStoreService } from '../../services/task-store.service';
-
+import { ModalComponent } from '../../../../shared/modal/modal.component';
+import { CreateTaskComponent } from '../create-task/create-task.component';
+import { ModalService } from '../../../../shared/modal/modal.service';
 
 interface DragTaskList {
   status: TaskStatus;
@@ -18,7 +20,7 @@ interface DragTaskList {
 
 @Component({
   selector: 'app-task-board',
-  imports: [DragDropModule, CommonModule],
+  imports: [DragDropModule, CommonModule, ModalComponent, CreateTaskComponent],
   templateUrl: './task-board.component.html',
   styleUrl: './task-board.component.scss',
 })
@@ -30,10 +32,12 @@ export class TaskBoardComponent implements OnInit {
     IN_PROGRESS: 'In Progress',
     COMPLETED: 'Completed',
   };
+  currentStatus: TaskStatus = 'OPEN';
 
   constructor(
     private route: ActivatedRoute,
-    private taskStore: TaskStoreService
+    private taskStore: TaskStoreService,
+    private modalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -43,22 +47,37 @@ export class TaskBoardComponent implements OnInit {
       return;
     }
     console.log('Project ID:', projectId);
-    this.tasks 
-    let tasks= this.taskStore.getTasks(Number(projectId));
-    this.tasks = tasks.reduce((acc: DragTaskList[], task: ITask) => {
-      const existingList = acc.find((list) => list.status === task.status);
-      if (existingList) {
-        existingList.tasks.push(task);
-      }
-      else {
-        acc.push({ status: task.status, tasks: [task] });
-      }
-      return acc;
-    }, []);  
 
-    this.connectedDropLists = this.tasks.map(
-      (_, index) => `cdk-drop-list-${index}`
+    this.tasks = this.getTasksByProjectId(projectId);
+  }
+
+  getTasksByProjectId(
+    projectId: string
+  ): { status: TaskStatus; tasks: any[] }[] {
+    let tasks = this.taskStore.getTasks(projectId);
+    let data = tasks.reduce(
+      (acc: DragTaskList[], task: ITask) => {
+        const existingList = acc.find((list) => list.status === task.status);
+        existingList?.tasks.push(task);
+        return acc;
+      },
+      [
+        {
+          status: 'OPEN',
+          tasks: [],
+        },
+        {
+          status: 'IN_PROGRESS',
+          tasks: [],
+        },
+        {
+          status: 'COMPLETED',
+          tasks: [],
+        },
+      ]
     );
+    this.connectedDropLists = data.map((_, index) => `cdk-drop-list-${index}`);
+    return data;
   }
 
   drop(event: CdkDragDrop<ITask[]>, targetStatus: string) {
@@ -82,5 +101,18 @@ export class TaskBoardComponent implements OnInit {
       const movedTask = event.container.data[event.currentIndex];
       console.log(`Task "${movedTask}" moved to "${targetStatus}"`);
     }
+  }
+
+  addTask(status: TaskStatus) {
+    this.currentStatus = status;
+    this.modalService.show('createTaskModal');
+  }
+
+  taskCreated(task: ITask) {
+    this.modalService.hide('createTaskModal');
+    this.tasks = this.getTasksByProjectId(
+      this.route.snapshot.paramMap.get('id') as string
+    );
+    console.log('Task created:', task);
   }
 }

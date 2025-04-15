@@ -1,7 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { ITask } from '../../interfaces/task.interface';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ITask, TaskStatus } from '../../interfaces/task.interface';
 import { TaskStoreService } from '../../services/task-store.service';
 import { CommonModule } from '@angular/common';
 
@@ -11,26 +24,23 @@ import { CommonModule } from '@angular/common';
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.scss',
 })
-export class CreateTaskComponent implements OnInit {
+export class CreateTaskComponent implements OnInit, OnChanges {
+  @Input() status: TaskStatus = 'OPEN';
+  @Output() taskCreated = new EventEmitter<ITask>();
+  @Input() isRouted = true;
   taskForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private taskStore: TaskStoreService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    // const projectId = this.route.snapshot.paramMap.get('id');
-    // if (!projectId) {
-    //   console.error('Project ID is not provided');
-    //   return;
-    // }
-    // console.log('Project ID:', projectId);
-
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
-      status: ['OPEN', Validators.required],
+      status: [this.status, Validators.required],
       assignee: ['', Validators.required],
       size: ['M', Validators.required],
       startDate: ['', Validators.required],
@@ -38,7 +48,14 @@ export class CreateTaskComponent implements OnInit {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['status'] && !changes['status'].isFirstChange()) {
+      this.taskForm.patchValue({ status: changes['status'].currentValue });
+    }
+  }
+
   onSubmit(): void {
+    let projectId = Number(this.route.snapshot.paramMap.get('id'));
     if (this.taskForm.valid) {
       const newTask: ITask = {
         id: Date.now(), // Generate a unique ID
@@ -47,6 +64,13 @@ export class CreateTaskComponent implements OnInit {
       };
       this.taskStore.addTask(newTask);
       this.taskForm.reset();
+      if (this.isRouted) {
+        this.router.navigateByUrl(
+          `projects/view-project/${projectId}/backlogs`
+        );
+      } else {
+        this.taskCreated.emit(newTask);
+      }
     }
   }
 }

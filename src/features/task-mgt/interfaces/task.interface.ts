@@ -1,6 +1,6 @@
 export interface ITask {
-    id: number;
-    projectId: number;
+    id: string;
+    projectId: string;
     title: string;
     status: TaskStatus;
     assignee: string;

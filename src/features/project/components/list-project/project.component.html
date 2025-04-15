@@ -5,17 +5,18 @@
         <a class="navbar-brand">Projects</a>
 
         <div class="filters">
-          <button disabled
+          <button
+            disabled
             class="btn btn-outline-secondary ms-2"
             (click)="navigateToCreateProject()"
           >
-          <i class="bi bi-sliders"></i> Setting
+            <i class="bi bi-sliders"></i> Setting
           </button>
           <button
             class="btn btn-outline-primary ms-2"
             (click)="navigateToCreateProject()"
           >
-          <i class="bi bi-plus"></i>
+            <i class="bi bi-plus"></i>
             New Project
           </button>
         </div>
@@ -33,24 +34,12 @@
           <button class="btn btn-outline-success" type="submit">Search</button>
         </div>
       </form>
-      <!-- <div class="d-flex ms-4">
-        <button class="btn" disabled>Sort</button>
-        <div class="vr"></div>
-        <button class="btn">Start Date</button>
-        <div class="vr"></div>
-        <button class="btn" (click)="isAccedingOrder = !isAccedingOrder">
-          @if(isAccedingOrder){
-          <i class="bi bi-arrow-up"></i>
-          } @else {
-          <i class="bi bi-arrow-down"></i>
-          }
-        </button>
-      </div> -->
       <div class="filters ms-auto d-flex">
         <div class="btn-group me-2" role="group">
           <button
             type="button"
             class="btn btn-outline-secondary"
+            [ngClass]="{ active: currentFilter === 'ALL' }"
             (click)="filterByStatus('ALL')"
           >
             All ({{ allProjectsCount }})
@@ -58,6 +47,7 @@
           <button
             type="button"
             class="btn btn-outline-secondary"
+            [ngClass]="{ active: currentFilter === 'COMPLETED' }"
             (click)="filterByStatus('COMPLETED')"
           >
             Completed ({{ completedProjectsCount }})
@@ -65,6 +55,7 @@
           <button
             type="button"
             class="btn btn-outline-secondary"
+            [ngClass]="{ active: currentFilter === 'IN_PROGRESS' }"
             (click)="filterByStatus('IN_PROGRESS')"
           >
             In Progress ({{ inProgressProjectsCount }})
@@ -72,6 +63,7 @@
           <button
             type="button"
             class="btn btn-outline-secondary"
+            [ngClass]="{ active: currentFilter === 'NOT_STARTED' }"
             (click)="filterByStatus('NOT_STARTED')"
           >
             Not Started ({{ notStartedProjectsCount }})
@@ -104,20 +96,39 @@
     </div>
     <div>
       <ng-container *ngIf="isListView; else cardView">
-        <ng-container *ngFor="let project of filteredProjects; trackBy: trackByFn">
+        <ng-container
+          *ngFor="let project of filteredProjects; trackBy: trackByFn"
+        >
           <!-- List View Template -->
-          <div class="border shadow-sm row m-3 rounded border-0">
+          <div class="bg-white p-2 border shadow-sm row m-3 rounded border-0">
             <div class="col-4 border-end">
               <h5 class="card-title">{{ project.title }}</h5>
-              <p class="card-text">{{ project.description }}</p>
+              <div class="row pt-2">
+                <div class="col-3 label">Owner</div>
+                <div class="col value">{{ project.owner }}</div>
+              </div>
+              <div class="row pt-2">
+                <div class="col-3 label">Start Date</div>
+                <div class="col value">{{ project.startDate }}</div>
+              </div>
+              <div class="d-flex text-center align-items-center pt-2">
+                <span
+                  class="project-status me-2"
+                  [ngClass]="{
+                    'bg-success': project.status === 'COMPLETED',
+                    'bg-info': project.status === 'IN_PROGRESS',
+                    'bg-danger': project.status === 'NOT_STARTED'
+                  }"
+                ></span>
+                {{ project.status ? status[project.status] : "Unknown Status" }}
+              </div>
             </div>
-            <ul class="list-group list-group-flush col-4 border-end">
-              <li class="list-group-item">Status: {{ project.status }}</li>
-              <li class="list-group-item">Owner: {{ project.owner }}</li>
-              <li class="list-group-item">Start Date: {{ project.startDate }}</li>
-            </ul>
-            <div class="card-body col-4 text-center">
-              <button class="btn btn-primary" (click)="viewProject(project)">
+            <p class="card-text col-6 border-end">{{ project.description }}</p>
+
+            <div
+              class="card-body col-2 d-flex justify-content-center align-items-center"
+            >
+              <button class="btn btn-link" (click)="viewProject(project)">
                 View Project
               </button>
             </div>
@@ -125,24 +136,45 @@
         </ng-container>
       </ng-container>
       <ng-template #cardView>
-        <div class="project-dashboard row row-cols-auto justify-content-between">
-          <ng-container *ngFor="let project of filteredProjects; trackBy: trackByFn">
+        <div
+          class="project-dashboard row row-cols-auto justify-content-between"
+        >
+          <ng-container
+            *ngFor="let project of filteredProjects; trackBy: trackByFn"
+          >
             <!-- Card View Template -->
-            <div class="card col shadow-sm rounded g-3 border-0" style="width: 18rem">
+            <div
+              class="card col shadow-sm rounded g-3 border-0"
+              style="width: 18rem"
+            >
               <div class="card-body">
-                <h5 class="card-title">{{ project.title }}</h5>
-                <p class="card-text">{{ project.description }}</p>
+                <h5 class="card-title text-truncate">{{ project.title }}</h5>
+                <div class="card-text line-clamp pb-3">
+                  {{ project.description }}
+                </div>
+                <ul class="list-group">
+                  <li class="list-group-item">Owner: {{ project.owner }}</li>
+                  <li class="list-group-item">
+                    Start Date: {{ project.startDate }}
+                  </li>
+                </ul>
               </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Status: {{ project.status }}</li>
-                <li class="list-group-item">Owner: {{ project.owner }}</li>
-                <li class="list-group-item">Start Date: {{ project.startDate }}</li>
-              </ul>
-              <div class="card-body">
-                <button
-                  class="btn btn-outline-primary"
-                  (click)="viewProject(project)"
-                >
+
+              <div class="card-footer d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                  <span
+                    class="project-status me-2"
+                    [ngClass]="{
+                      'bg-success': project.status === 'COMPLETED',
+                      'bg-info': project.status === 'IN_PROGRESS',
+                      'bg-danger': project.status === 'NOT_STARTED'
+                    }"
+                  ></span>
+                  {{
+                    project.status ? status[project.status] : "Unknown Status"
+                  }}
+                </div>
+                <button class="btn btn-link" (click)="viewProject(project)">
                   View Project
                 </button>
               </div>

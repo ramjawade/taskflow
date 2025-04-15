@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IProject } from '../../../common/interfaces/project.interface';
 import { ProjectStoreService } from '../../../common/services/project-store.service';
+import { TaskStoreService } from '../../../task-mgt/services/task-store.service';
 
 @Component({
   selector: 'app-project',
@@ -15,6 +16,12 @@ export class ProjectComponent implements OnInit {
   filteredProjects: IProject[] = [];
   isListView = false;
   isAccedingOrder = true;
+  status = {
+    COMPLETED: 'Completed',
+    NOT_STARTED: 'Not Started',
+    IN_PROGRESS: 'In Progress',
+  };
+  currentFilter = 'ALL';
 
   // Status counts
   allProjectsCount = 0;
@@ -24,7 +31,7 @@ export class ProjectComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private storeService: ProjectStoreService
+    private storeService: ProjectStoreService,
   ) {}
 
   ngOnInit() {
@@ -53,6 +60,7 @@ export class ProjectComponent implements OnInit {
   }
 
   filterByStatus(status: string) {
+    this.currentFilter = status;
     if (status === 'ALL') {
       this.filteredProjects = [...this.projects];
     } else {

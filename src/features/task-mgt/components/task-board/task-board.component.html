@@ -1,7 +1,7 @@
-<div class="row justify-content-between project-board">
+<div class="row project-board" style="gap: 10px;">
   <div
-    class="card px-0"
-    style="width: 20rem"
+    class="card px-0 flex-grow-1 mb-3"
+    style="flex-basis: calc(33.333% - 10px);"
     *ngFor="let taskCategory of tasks"
     cdkDropList
     [cdkDropListData]="taskCategory.tasks"
@@ -22,15 +22,6 @@
       </h5>
     </div>
     <div class="card-body">
-      <!-- <ul class="list-group list-group-flush">
-        <li
-          class="list-group-item"
-          *ngFor="let task of taskCategory.tasks"
-          cdkDrag
-        >
-          {{ task.title }}
-        </li>
-      </ul> -->
       <ol class="list-group list-group-numbered">
         <li
           *ngFor="let task of taskCategory.tasks"
@@ -39,15 +30,19 @@
         >
           <div class="ms-2 me-auto">
             <div>{{ task.title }}</div>
-            Subtitle
           </div>
           <span class="badge text-bg-info rounded-pill">{{ task.size }}</span>
         </li>
       </ol>
     </div>
-    <button class="btn btn-outline-secondary text-start mt-2 add-task">
+    <button class="btn btn-outline-secondary text-start mt-2 add-task" (click)="addTask(taskCategory.status)">
       <i class="bi bi-plus"></i>
       Add Task
     </button>
   </div>
 </div>
+<app-modal modalId="createTaskModal" modalTitle="Create Task">
+  <div class="modal-body">
+    <app-create-task [isRouted]="false" [status]="currentStatus" (taskCreated)="taskCreated($event)"></app-create-task>
+  </div>
+</app-modal>

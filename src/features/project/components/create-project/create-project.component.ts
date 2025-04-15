@@ -37,4 +37,8 @@ export class CreateProjectComponent {
       console.log('Form is invalid');
     }
   }
+
+  goBack() {
+    this.router.navigate(['/projects']);
+  }
 }

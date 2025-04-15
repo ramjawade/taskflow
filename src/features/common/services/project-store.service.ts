@@ -19,7 +19,7 @@ export class ProjectStoreService {
     {
       id: '2',
       title: 'CRM System',
-      description: 'Implementation of a customer relationship management system.',
+      description: 'Implementation of a customer relationship management.',
       status: 'COMPLETED',
       owner: 'Jane Smith',
       startDate: '2023-02-01',
@@ -109,7 +109,7 @@ export class ProjectStoreService {
     {
       id: '11',
       title: 'Cybersecurity Platform',
-      description: 'Development of a platform for monitoring and preventing cyber threats.',
+      description: 'Development of a platform for monitoring and preventing cyber.',
       status: 'IN_PROGRESS',
       owner: 'Henry Adams',
       startDate: '2023-10-01',
@@ -143,7 +143,8 @@ export class ProjectStoreService {
       this.projects[index] = project;
     }
   }
-  deleteProject(index: number): void {
+  deleteProject(id: string): void {
+    const index = this.projects.findIndex((project) => project.id === id);
     if (index >= 0 && index < this.projects.length) {
       this.projects.splice(index, 1);
     }
